@@ -42,8 +42,17 @@ const confirmar = async (req, res) => {
   }
 };
 
-const autenticar = (req, res) => {
-  console.log(req.body);
+const autenticar = async (req, res) => {
+  const { email } = req.body;
+  //comprobar si el usuario existe
+  const usuario = await Veterinario.findOne({ email: email });
+
+  if (!usuario) {
+    const error = new Error("Usuario no valido..");
+    return res.status(403).json({ msg: error.message });
+  }
+  //Comprobar si el email esta confirmado
+  console.log("Usuario existe");
   res.json({ msg: "Autenticado..." });
 };
 
