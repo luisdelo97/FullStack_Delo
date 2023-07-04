@@ -52,8 +52,10 @@ const autenticar = async (req, res) => {
     return res.status(403).json({ msg: error.message });
   }
   //Comprobar si el email esta confirmado
-  console.log("Usuario existe");
-  res.json({ msg: "Autenticado..." });
+  if (!usuario.confirmado) {
+    const error = new Error("Tu cuenta no ha sido confirmada..");
+    return res.status(403).json({ msg: error.message });
+  }
 };
 
 export { registrar, perfil, confirmar, autenticar };
