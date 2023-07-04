@@ -4,6 +4,11 @@ import conectarDB from "./config/db.js";
 import router from "./routes/veterinarioRouter.js";
 
 const app = express();
+
+// con esto le decimos que vamos a estar enviando datos tipo json
+app.use(express.json());
+
+//  conectar a la base de datos
 conectarDB();
 
 app.use("/api/veterinarios", router);
