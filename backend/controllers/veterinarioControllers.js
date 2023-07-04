@@ -89,7 +89,18 @@ const olvidePassword = async (req, res) => {
   }
 };
 
-const comprobarToken = async (req, res) => {};
+const comprobarToken = async (req, res) => {
+  const { token } = req.params;
+
+  const tokenValido = await Veterinario.findOne({ token: token });
+  if (tokenValido) {
+    // el token es valido el usuario existe
+    res.json({ msg: "el token es valido el usuario existe" });
+  } else {
+    const error = new Error("Token no valido...");
+    return res.status(404).json({ msg: error.message });
+  }
+};
 
 const nuevoPassword = async (req, res) => {};
 
