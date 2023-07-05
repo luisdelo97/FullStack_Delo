@@ -2,6 +2,9 @@ import express from "express";
 import {
   agregarPacientes,
   obtenerPacientes,
+  obtenerUnPaciente,
+  actualizarPaciente,
+  eliminarPaciente,
 } from "../controllers/pacienteController.js";
 import checkAuth from "../middleware/authMiddleware.js";
 
@@ -11,5 +14,11 @@ router
   .route("/")
   .post(checkAuth, agregarPacientes)
   .get(checkAuth, obtenerPacientes);
+
+router
+  .route("/:id")
+  .get(checkAuth, obtenerUnPaciente)
+  .put(checkAuth, actualizarPaciente)
+  .delete(checkAuth, eliminarPaciente);
 
 export default router;
