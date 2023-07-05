@@ -10,6 +10,11 @@ const agregarPacientes = async (req, res) => {
     console.log(error);
   }
 };
-const obtenerPacientes = (req, res) => {};
+const obtenerPacientes = async (req, res) => {
+  const pacientes = await Paciente.find()
+    .where("veterinario")
+    .equals(req.veterinario);
+  res.json(pacientes);
+};
 
 export { agregarPacientes, obtenerPacientes };
