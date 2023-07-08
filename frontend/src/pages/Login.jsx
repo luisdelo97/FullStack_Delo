@@ -5,14 +5,14 @@ const Login = () => {
     <>
       <div>
         <h1 className="text-indigo-600 font-black text-5xl ">
-          Inicia Sesion y Administra tus{" "}
-          <span className="text-black">Pacientes</span>
+          Inicia Sesion y Administra tus
+          <span className="text-black"> Pacientes</span>
         </h1>
       </div>
-      <div>
+      <div className="mt-20 md:mt-5 shadow-lg px-5 py-10 rounded-xl bg-white">
         <form action="">
+          {/* Email */}
           <div className="my-5">
-            {/* Email */}
             <label
               className="uppercase text-gray-600 block text-xl font-bold"
               htmlFor=""
@@ -28,7 +28,6 @@ const Login = () => {
           </div>
           {/* Password */}
           <div className="my-5">
-            {/* Email */}
             <label
               className="uppercase text-gray-600 block text-xl font-bold"
               htmlFor=""
@@ -51,13 +50,13 @@ const Login = () => {
         </form>
         <nav className="mt-10 lg:flex lg:justify-between">
           <Link className="block text-center my-5 text-gray-500" to="/olvide">
-            Olvidaste tu password?{" "}
+            Olvidaste tu password?
           </Link>
           <Link
             className="block text-center my-5 text-gray-500"
             to="/registrar"
           >
-            No tienes una cuenta? Registrate!!{" "}
+            No tienes una cuenta? Registrate!!
           </Link>
         </nav>
       </div>
