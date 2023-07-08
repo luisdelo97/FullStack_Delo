@@ -1,26 +1,53 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import Alerta from "../components/Alerta";
 
 const Registrar = () => {
   const [nombre, setNombre] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [alerta, setAlerta] = useState({});
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (password.length < 6) {
-      alert("La contraseña debe tener al menos 6 caracteres");
+      setAlerta({
+        msg: "La contraseña debe tener al menos 6 caracteres",
+        error: true,
+      });
       return;
     }
     if (password !== confirmPassword) {
-      alert("Las contraseñas no coinciden");
+      setAlerta({ msg: "Las contraseñas no coinciden", error: true });
       return;
-    } else {
-      alert("Registro exitoso");
+    }
+
+    //Creando el usuario en la api
+    try {
+      const url = "http://localhost:4000/api/veterinarios";
+      const respuesta = await axios.post(url, { nombre, email, password });
+      setAlerta({
+        msg: "Creado correctamente, revisa tu email",
+        error: false,
+      });
+      setTimeout(() => {
+        setAlerta({});
+      }, 2000);
+      //Estas lineas hacen reset de los campos una vez se accione y se cree el usuario
+      setNombre("");
+      setEmail("");
+      setPassword("");
+      setConfirmPassword("");
+      console.log(respuesta);
+    } catch (error) {
+      setAlerta({ msg: error.response.data.msg, error: true });
     }
   };
+
+  const { msg } = alerta;
 
   return (
     <>
@@ -31,6 +58,8 @@ const Registrar = () => {
         </h1>
       </div>
       <div className="mt-20 md:mt-5 shadow-lg px-5 py-10 rounded-xl bg-white">
+        {/* si existe el mensaje muestra la alerta */}
+        {msg && <Alerta alerta={alerta} />}
         <form action="" onSubmit={handleSubmit}>
           {/* Name */}
           <div className="my-5">

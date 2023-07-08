@@ -1,5 +1,6 @@
 import express from "express";
 import dotenv from "dotenv/config";
+import cors from "cors";
 import conectarDB from "./config/db.js";
 import veterinarioRoutes from "./routes/veterinarioRouter.js";
 import pacienteRoutes from "./routes/pacienteRouter.js";
@@ -11,6 +12,18 @@ app.use(express.json());
 
 //  conectar a la base de datos
 conectarDB();
+
+const dominiosPermitidos = ["http://localhost:5173"];
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (dominiosPermitidos.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+};
+app.use(cors(corsOptions));
 
 app.use("/api/veterinarios", veterinarioRoutes);
 
