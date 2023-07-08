@@ -7,6 +7,21 @@ const Registrar = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (password.length < 6) {
+      alert("La contraseña debe tener al menos 6 caracteres");
+      return;
+    }
+    if (password !== confirmPassword) {
+      alert("Las contraseñas no coinciden");
+      return;
+    } else {
+      alert("Registro exitoso");
+    }
+  };
+
   return (
     <>
       <div>
@@ -16,7 +31,7 @@ const Registrar = () => {
         </h1>
       </div>
       <div className="mt-20 md:mt-5 shadow-lg px-5 py-10 rounded-xl bg-white">
-        <form action="">
+        <form action="" onSubmit={handleSubmit}>
           {/* Name */}
           <div className="my-5">
             <label
