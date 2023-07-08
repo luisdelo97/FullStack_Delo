@@ -1,5 +1,5 @@
 import Paciente from "../models/Pacientes.js";
-
+import mongoose from "mongoose";
 const agregarPacientes = async (req, res) => {
   const paciente = new Paciente(req.body);
   paciente.veterinario = req.veterinario._id;
@@ -19,10 +19,17 @@ const obtenerPacientes = async (req, res) => {
 
 const obtenerUnPaciente = async (req, res) => {
   const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    const error = new Error("Id no válido");
+    return res.status(403).json({ msg: error.message });
+  }
+
   const paciente = await Paciente.findById(id);
 
   if (!paciente) {
-    return res.status(400).json({ meg: "Paciente no encontrado..." });
+    const error = new Error("Paciente no encontrado");
+    return res.status(404).json({ msg: error.message });
   }
 
   if (paciente.veterinario._id.toString() !== req.veterinario._id.toString()) {
@@ -59,7 +66,31 @@ const actualizarPaciente = async (req, res) => {
   }
 };
 
-const eliminarPaciente = async (req, res) => {};
+const eliminarPaciente = async (req, res) => {
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    const error = new Error("Id no válido");
+    return res.status(403).json({ msg: error.message });
+  }
+
+  const paciente = await Paciente.findById(id);
+
+  if (!paciente) {
+    return res.status(400).json({ meg: "Paciente no encontrado..." });
+  }
+
+  if (paciente.veterinario._id.toString() !== req.veterinario._id.toString()) {
+    return res.json({ meg: "Accion no valida..." });
+  }
+
+  try {
+    await paciente.deleteOne();
+    res.json({ msg: "Paciente eliminado.." });
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 export {
   agregarPacientes,
