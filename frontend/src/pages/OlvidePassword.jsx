@@ -4,7 +4,7 @@ const OlvidePassword = () => {
     <>
       <div>
         <h1 className="text-indigo-600 font-black text-5xl ">
-          Inicia Sesion y Administra tus
+          Recupera tu Acceso y no Pierdas tus
           <span className="text-black"> Pacientes</span>
         </h1>
       </div>
