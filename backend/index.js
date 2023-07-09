@@ -14,7 +14,7 @@ app.use(express.json());
 conectarDB();
 
 //soluciona el error del cors
-const dominiosPermitidos = ["http://localhost:5173"];
+const dominiosPermitidos = [process.env.FRONTEND_URL];
 
 const corsOptions = {
   origin: (origin, callback) => {
