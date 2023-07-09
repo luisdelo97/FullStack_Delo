@@ -49,7 +49,10 @@ const Login = () => {
           />
         </form>
         <nav className="mt-10 lg:flex lg:justify-between">
-          <Link className="block text-center my-5 text-gray-500" to="/olvide">
+          <Link
+            className="block text-center my-5 text-gray-500"
+            to="/olvide-password"
+          >
             Olvidaste tu password?
           </Link>
           <Link

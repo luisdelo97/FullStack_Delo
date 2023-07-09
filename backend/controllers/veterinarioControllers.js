@@ -81,7 +81,7 @@ const autenticar = async (req, res) => {
 };
 
 const olvidePassword = async (req, res) => {
-  const { email, nombre } = req.body;
+  const { email } = req.body;
 
   const existeVeterinario = await Veterinario.findOne({ email: email });
 
@@ -89,7 +89,7 @@ const olvidePassword = async (req, res) => {
     const error = new Error("No existe este usuario..");
     return res.status(404).json({ msg: error.message });
   }
-
+  console.log(existeVeterinario);
   try {
     existeVeterinario.token = generarID();
     await existeVeterinario.save();
@@ -97,7 +97,7 @@ const olvidePassword = async (req, res) => {
     //Enviar el email de olvide password
     emailOlvidePassword({
       email,
-      nombre,
+      nombre: existeVeterinario.nombre,
       token: existeVeterinario.token,
     });
 

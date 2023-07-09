@@ -13,8 +13,8 @@ function App() {
         <Route path="/" element={<AuthLayouts />}>
           <Route index element={<Login />} />
           <Route path="registrar" element={<Registrar />} />
-          <Route path="olvide" element={<OlvidePassword />} />
-          <Route path="olvide/:token" element={<NuevoPassword />} />
+          <Route path="olvide-password" element={<OlvidePassword />} />
+          <Route path="olvide-password/:token" element={<NuevoPassword />} />
           <Route path="confirmar/:id" element={<ConfirmarCuenta />} />
         </Route>
       </Routes>
