@@ -2,6 +2,7 @@ import Veterinario from "../models/Veterinario.js";
 import generarJWT from "../helpers/generarJWT.js";
 import generarID from "../helpers/generarID.js";
 import emailRegistro from "../helpers/emailRegistro.js";
+import emailOlvidePassword from "../helpers/emailOlvidePassword.js";
 
 const registrar = async (req, res) => {
   const { email, nombre } = req.body;
@@ -80,7 +81,7 @@ const autenticar = async (req, res) => {
 };
 
 const olvidePassword = async (req, res) => {
-  const { email } = req.body;
+  const { email, nombre } = req.body;
 
   const existeVeterinario = await Veterinario.findOne({ email: email });
 
@@ -92,6 +93,14 @@ const olvidePassword = async (req, res) => {
   try {
     existeVeterinario.token = generarID();
     await existeVeterinario.save();
+
+    //Enviar el email de olvide password
+    emailOlvidePassword({
+      email,
+      nombre,
+      token: existeVeterinario.token,
+    });
+
     res.json({ msg: "Hemos enviado el email con las instrucciones.." });
   } catch (error) {
     console.log(error);
