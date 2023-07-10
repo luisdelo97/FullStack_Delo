@@ -36,9 +36,6 @@ const Registrar = () => {
         msg: "Creado correctamente, revisa tu email",
         error: false,
       });
-      setTimeout(() => {
-        setAlerta({});
-      }, 2000);
       //Estas lineas hacen reset de los campos una vez se accione y se cree el usuario
       setNombre("");
       setEmail("");
