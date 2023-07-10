@@ -15,7 +15,6 @@ const checkAuth = async (req, res, next) => {
       req.veterinario = await Veterinario.findById(decoded.id).select(
         "-password -token -confirmado"
       );
-
       return next();
     } catch (error) {
       console.log(error);
