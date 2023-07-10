@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import Alerta from "../components/Alerta";
 import clienteAxios from "../config/axios";
 
@@ -7,9 +7,9 @@ const NuevoPassword = () => {
   const [password, setPassword] = useState("");
   const [alerta, setAlerta] = useState({});
   const [tokenValido, setTokenValido] = useState(false);
+  const [newPassword, setNewPassword] = useState(false);
 
   const { token } = useParams();
-  console.log(token);
 
   useEffect(() => {
     const comprobarToken = async () => {
@@ -26,22 +26,23 @@ const NuevoPassword = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // try {
-    //   const { data } = await clienteAxios.post(
-    //     "/veterinarios/olvide-password",
-    //     {
-    //       password,
-    //     }
-    //   );
-    //   setAlerta({
-    //     msg: data.msg,
-    //     error: false,
-    //   });
-    //   setPassword("");
-    //   console.log(data);
-    // } catch (error) {
-    //   setAlerta({ msg: error.response.data.msg, error: true });
-    // }
+
+    if (password.length < 6) {
+      setAlerta({
+        msg: "La contraseña debe tener al menos 6 caracteres",
+        error: true,
+      });
+      return;
+    }
+
+    try {
+      const url = `veterinarios/olvide-password/${token}`;
+      const { data } = await clienteAxios.post(url, { password });
+      setAlerta({ msg: data.msg, error: false });
+      setNewPassword(true);
+    } catch (error) {
+      setAlerta({ msg: error.response.data.msg, error: true });
+    }
   };
 
   const { msg } = alerta;
@@ -60,6 +61,7 @@ const NuevoPassword = () => {
         {tokenValido && (
           <form action="" onSubmit={handleSubmit}>
             {/* Nuevo Password */}
+
             <div className="my-5">
               <label
                 className="uppercase text-gray-600 block text-xl font-bold"
@@ -83,6 +85,11 @@ const NuevoPassword = () => {
               value="Guardar"
             />
           </form>
+        )}
+        {newPassword && (
+          <Link className="block text-center my-5 text-gray-500" to="/">
+            Iniciar Sesion
+          </Link>
         )}
       </div>
     </>
