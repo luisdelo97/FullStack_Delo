@@ -1,4 +1,5 @@
 import { useState } from "react";
+// import Alerta from "./Alerta";
 
 const Formulario = () => {
   const [nombre, setNombre] = useState("");
@@ -7,19 +8,20 @@ const Formulario = () => {
   const [fecha, setFecha] = useState(Date.now());
   const [sintomas, setSintomas] = useState("");
 
-  const [alerta, setAlerta] = useState({});
+  // const [alerta, setAlerta] = useState({});
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(e);
   };
 
+  // const { msg } = alerta;
   return (
     <>
       <p className="text-lg text-center mb-10">
         Añade tus Paciente y
         <span className="text-indigo-600 font-bold"> Administralos</span>
       </p>
+
       <form
         onSubmit={handleSubmit}
         className="bg-white py-10 px-5 mb-10 lg:mb-0 shadow-md"
@@ -92,9 +94,10 @@ const Formulario = () => {
             onChange={(e) => setSintomas(e.target.value)}
           />
         </div>
+        {/* {msg && <Alerta alerta={alerta} />} */}
         <input
           type="submit"
-          className="bg-indigo-600 font-bold text-white p-3 uppercase w-full  hover:bg-indigo-800 cursor-pointer transition-colors"
+          className="bg-indigo-600 font-bold text-white p-3 mt-3 uppercase w-full  hover:bg-indigo-800 cursor-pointer transition-colors"
           value="Agregar Paciente"
         />
       </form>
