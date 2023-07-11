@@ -7,8 +7,8 @@ import useAuth from "../hooks/useAuth";
 
 const RutaProtegida = () => {
   const { auth, cargando } = useAuth();
-  console.log(cargando);
-  console.log(auth);
+  // console.log(cargando);
+  // console.log(auth);
   if (cargando) return "cargando...";
 
   return (
