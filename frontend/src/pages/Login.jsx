@@ -21,9 +21,9 @@ const Login = () => {
       });
 
       localStorage.setItem("token", data.token);
-      setAlerta({ msg: "Iniciando..", error: false });
       navigate("/admin");
     } catch (error) {
+      console(error.response.data.msg);
       setAlerta({ msg: error.response.data.msg, error: true });
     }
   };

@@ -29,7 +29,6 @@ const AuthProvider = ({ children }) => {
         console.log(error.response.data.msg);
         setAuth({});
       }
-
       setCargando(false);
     };
     autenticarUruario();
@@ -41,6 +40,7 @@ const AuthProvider = ({ children }) => {
         auth,
         setAuth,
         cargando,
+        setCargando,
       }}
     >
       {children}

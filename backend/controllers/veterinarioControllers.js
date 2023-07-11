@@ -33,8 +33,7 @@ const registrar = async (req, res) => {
 
 const perfil = (req, res) => {
   const { veterinario } = req;
-
-  res.json({ perfil: veterinario });
+  res.json(veterinario);
 };
 
 const confirmar = async (req, res) => {
@@ -89,7 +88,7 @@ const olvidePassword = async (req, res) => {
     const error = new Error("No existe este usuario..");
     return res.status(404).json({ msg: error.message });
   }
-  console.log(existeVeterinario);
+
   try {
     existeVeterinario.token = generarID();
     await existeVeterinario.save();
