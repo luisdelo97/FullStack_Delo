@@ -3,13 +3,19 @@ import useAuth from "../hooks/useAuth";
 import { useEffect, useState } from "react";
 
 const EditarPerfil = () => {
-  const { auth } = useAuth();
+  const { auth, actualizarPerfil } = useAuth();
   const [perfil, setPerfil] = useState({});
 
   useEffect(() => {
     setPerfil(auth);
   }, [auth]);
-  console.log(perfil);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    actualizarPerfil(perfil);
+  };
+
   return (
     <>
       <AdminNav />
@@ -20,7 +26,7 @@ const EditarPerfil = () => {
       </p>
       <div className="flex justify-center">
         <div className="w-full md:w-1/2 bg-white shadow rounded-lg p-5">
-          <form onSubmit={null}>
+          <form onSubmit={handleSubmit}>
             <div className="my-3">
               <label htmlFor="" className="uppercase font-bold text-gray-600">
                 Nombre
@@ -46,6 +52,10 @@ const EditarPerfil = () => {
                 placeholder="Escribe tu sitio web.."
                 className="border bg-gray-50 w-full p-2 mt-5 rounded-lg"
                 name="web"
+                value={perfil.web || ""}
+                onChange={(e) =>
+                  setPerfil({ ...perfil, [e.target.name]: e.target.value })
+                }
               />
             </div>
             <div className="my-3">
@@ -57,6 +67,10 @@ const EditarPerfil = () => {
                 placeholder="Escribe tu telefono.."
                 className="border bg-gray-50 w-full p-2 mt-5 rounded-lg"
                 name="telefono"
+                value={perfil.telefono || ""}
+                onChange={(e) =>
+                  setPerfil({ ...perfil, [e.target.name]: e.target.value })
+                }
               />
             </div>
             <div className="my-3">
@@ -69,6 +83,10 @@ const EditarPerfil = () => {
                 placeholder="Escribe tu email.."
                 className="border bg-gray-50 w-full p-2 mt-5 rounded-lg"
                 name="email"
+                value={perfil.email || ""}
+                onChange={(e) =>
+                  setPerfil({ ...perfil, [e.target.name]: e.target.value })
+                }
               />
             </div>
             <input

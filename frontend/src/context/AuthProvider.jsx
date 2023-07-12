@@ -39,6 +39,9 @@ const AuthProvider = ({ children }) => {
     setAuth({});
   };
 
+  const actualizarPerfil = (datos) => {
+    console.log(datos);
+  };
   return (
     <AuthContext.Provider
       value={{
@@ -46,6 +49,7 @@ const AuthProvider = ({ children }) => {
         setAuth,
         cargando,
         cerrarSesion,
+        actualizarPerfil,
       }}
     >
       {children}
