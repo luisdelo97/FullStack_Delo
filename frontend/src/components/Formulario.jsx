@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import usePacientes from "../hooks/usePacientes";
-// import Alerta from "./Alerta";
+import Alerta from "./Alerta";
 
 const Formulario = () => {
   const [nombre, setNombre] = useState("");
@@ -10,7 +10,7 @@ const Formulario = () => {
   const [sintomas, setSintomas] = useState("");
   const [id, setId] = useState(null);
 
-  // const [alerta, setAlerta] = useState({});
+  const [alerta, setAlerta] = useState({});
   const { guardarPaciente, unPaciente } = usePacientes();
 
   useEffect(() => {
@@ -36,9 +36,17 @@ const Formulario = () => {
       sintomas,
       id,
     });
+    setAlerta({ msg: "Guardado Correctamente", error: false });
+    //Reiniciamos el State
+    setNombre("");
+    setPropietario("");
+    setEmail("");
+    setFecha("");
+    setSintomas("");
+    setId(null);
   };
 
-  // const { msg } = alerta;
+  const { msg } = alerta;
   return (
     <>
       <h2 className="font-black mt-2 text-3xl text-center">
@@ -121,7 +129,7 @@ const Formulario = () => {
             onChange={(e) => setSintomas(e.target.value)}
           />
         </div>
-        {/* {msg && <Alerta alerta={alerta} />} */}
+        {msg && <Alerta alerta={alerta} />}
         <input
           type="submit"
           className="bg-indigo-600 font-bold text-white p-3 mt-3 uppercase w-full  hover:bg-indigo-800 cursor-pointer transition-colors"

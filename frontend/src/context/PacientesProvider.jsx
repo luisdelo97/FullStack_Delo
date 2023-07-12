@@ -30,14 +30,53 @@ const PacientesProvider = ({ children }) => {
   }, []);
 
   const guardarPaciente = async (paciente) => {
-    if (paciente.id) {
-      console.log("Editando");
-    } else {
-      console.log("Nuevo");
-    }
+    const token = localStorage.getItem("token");
 
-    return;
-    try {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    if (paciente.id) {
+      try {
+        const { data } = await clienteAxios.put(
+          `/pacientes/${paciente.id}`,
+          paciente,
+          config
+        );
+
+        const pacientesActualizado = pacientes.map((pacienteState) =>
+          pacienteState._id === data._id ? data : pacienteState
+        );
+
+        setPacientes(pacientesActualizado);
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      try {
+        const { data } = await clienteAxios.post(
+          "/pacientes",
+          paciente,
+          config
+        );
+        const { createdAt, updatedAt, __v, ...pacienteAlmacenado } = data;
+        setPacientes([pacienteAlmacenado, ...pacientes]);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
+  const setEdicion = (paciente) => {
+    setUnPaciente(paciente);
+  };
+
+  const eliminarPaciente = async (id) => {
+    const confirmar = confirm("Confirma que deseas eliminar el paciente?");
+
+    if (confirmar) {
       const token = localStorage.getItem("token");
 
       const config = {
@@ -46,22 +85,29 @@ const PacientesProvider = ({ children }) => {
           Authorization: `Bearer ${token}`,
         },
       };
+      try {
+        await clienteAxios.delete(`/pacientes/${id}`, config);
 
-      const { data } = await clienteAxios.post("/pacientes", paciente, config);
-      const { createdAt, updatedAt, __v, ...pacienteAlmacenado } = data;
-      setPacientes([pacienteAlmacenado, ...pacientes]);
-    } catch (error) {
-      console.log(error.response.data.msg);
+        const pacientesActualizado = pacientes.filter(
+          (pacienteState) => pacienteState._id !== id
+        );
+
+        setPacientes(pacientesActualizado);
+      } catch (error) {
+        console.log(error);
+      }
     }
-  };
-
-  const setEdicion = (paciente) => {
-    setUnPaciente(paciente);
   };
 
   return (
     <PacientesContext.Provider
-      value={{ pacientes, guardarPaciente, setEdicion, unPaciente }}
+      value={{
+        pacientes,
+        guardarPaciente,
+        setEdicion,
+        unPaciente,
+        eliminarPaciente,
+      }}
     >
       {children}
     </PacientesContext.Provider>

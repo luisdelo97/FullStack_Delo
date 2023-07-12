@@ -3,11 +3,13 @@ import usePacientes from "../hooks/usePacientes";
 const Paciente = ({ paciente }) => {
   const { email, fecha, nombre, propietario, sintomas, _id } = paciente;
 
-  const { setEdicion } = usePacientes();
+  const { setEdicion, eliminarPaciente } = usePacientes();
 
   const formatearFecha = (fecha) => {
     const nuevaFecha = new Date(fecha);
-
+    nuevaFecha.setMinutes(
+      nuevaFecha.getMinutes() + nuevaFecha.getTimezoneOffset()
+    );
     return new Intl.DateTimeFormat("es-MX", { dateStyle: "long" }).format(
       nuevaFecha
     );
@@ -53,6 +55,7 @@ const Paciente = ({ paciente }) => {
         <button
           type="button"
           className="py-2 px-10 bg-red-600 hover:bg-red-800 text-white rounded-md uppercase font-bold"
+          onClick={() => eliminarPaciente(_id)}
         >
           Eliminar
         </button>
