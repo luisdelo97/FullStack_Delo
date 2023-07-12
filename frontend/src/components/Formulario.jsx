@@ -28,7 +28,10 @@ const Formulario = () => {
   // const { msg } = alerta;
   return (
     <>
-      <p className="text-lg text-center mb-10">
+      <h2 className="font-black mt-2 text-3xl text-center">
+        Adminstrador de Pacientes
+      </h2>
+      <p className="text-xl mt-5 text-center mb-10">
         Añade tus Paciente y
         <span className="text-indigo-600 font-bold"> Administralos</span>
       </p>
