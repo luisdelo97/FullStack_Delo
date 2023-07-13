@@ -7,7 +7,7 @@ import useAuth from "../hooks/useAuth";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [alerta, setAlerta] = useState("");
+  const [alerta, setAlerta] = useState({});
 
   const { setAuth } = useAuth();
 
@@ -26,7 +26,7 @@ const Login = () => {
       setAuth(data);
       navigate("/admin");
     } catch (error) {
-      console(error.response.data.msg);
+      console.log(error.response.data.msg);
       setAlerta({ msg: error.response.data.msg, error: true });
     }
   };
