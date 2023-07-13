@@ -25,6 +25,7 @@ const veterinarioSchema = mongoose.Schema({
   },
   web: {
     type: String,
+    default: null,
     trim: true,
   },
   token: {

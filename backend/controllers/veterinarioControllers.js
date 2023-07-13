@@ -144,6 +144,56 @@ const nuevoPassword = async (req, res) => {
   }
 };
 
+const actualizarPerfil = async (req, res) => {
+  const veterinario = await Veterinario.findById(req.params.id);
+  if (!veterinario) {
+    const error = new Error("No existe este veterinario..");
+    return res.status(404).json({ msg: error.message });
+  }
+
+  if (veterinario.email !== req.body.email) {
+    const { email } = req.body;
+    const existeEmail = await Veterinario.findOne({ email });
+    if (existeEmail) {
+      const error = new Error("Email ya registrado..");
+      return res.status(400).json({ msg: error.message });
+    }
+  }
+
+  try {
+    veterinario.nombre = req.body.nombre;
+    veterinario.telefono = req.body.telefono;
+    veterinario.email = req.body.email;
+    veterinario.web = req.body.web;
+    const veterinarioActualizado = await veterinario.save();
+    res.json(veterinarioActualizado);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const actualizarPassword = async (req, res) => {
+  //Leer los datos
+  const { _id } = req.veterinario;
+  const { pwd_actual, pwd_nuevo } = req.body;
+  //Comprobar que el veterinario existe
+  const veterinario = await Veterinario.findById(_id);
+  if (!veterinario) {
+    const error = new Error("No existe este veterinario..");
+    return res.status(404).json({ msg: error.message });
+  }
+  //Comprobar el password
+  if (await veterinario.comprobarPassword(pwd_actual)) {
+    //Almacenar el nuevo password
+    veterinario.password = pwd_nuevo;
+    await veterinario.save();
+    res.json({ msg: "Password almacenado correctamente.." });
+  } else {
+    const error = new Error("Password incorrecto..");
+    return res.status(404).json({ msg: error.message });
+  }
+};
+
 export {
   registrar,
   perfil,
@@ -152,4 +202,6 @@ export {
   olvidePassword,
   comprobarToken,
   nuevoPassword,
+  actualizarPerfil,
+  actualizarPassword,
 };
