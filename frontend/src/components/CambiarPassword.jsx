@@ -30,6 +30,10 @@ const CambiarPassword = () => {
 
     const respuesta = await guardarPassword(password);
     setAlerta(respuesta);
+
+    setTimeout(() => {
+      setAlerta({});
+    }, 3000);
   };
 
   const { msg } = alerta;

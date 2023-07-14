@@ -18,6 +18,10 @@ const EditarPerfil = () => {
     const resultado = await actualizarPerfil(perfil);
 
     setAlerta(resultado);
+
+    setTimeout(() => {
+      setAlerta({});
+    }, 3000);
   };
 
   const { msg } = alerta;

@@ -38,6 +38,10 @@ const Formulario = () => {
     });
     setAlerta({ msg: "Guardado Correctamente", error: false });
     //Reiniciamos el State
+    setTimeout(() => {
+      setAlerta({});
+    }, 3000);
+
     setNombre("");
     setPropietario("");
     setEmail("");
