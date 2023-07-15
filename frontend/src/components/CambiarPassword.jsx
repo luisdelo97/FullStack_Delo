@@ -9,6 +9,8 @@ const CambiarPassword = () => {
     pwd_actual: "",
     pwd_nuevo: "",
   });
+  const [ojo, setOjo] = useState(false);
+  const [ojo1, setOjo1] = useState(false);
 
   const { guardarPassword } = useAuth();
 
@@ -20,7 +22,7 @@ const CambiarPassword = () => {
       return;
     }
 
-    if (password.pwd_nuevo < 6) {
+    if (password.pwd_nuevo.length < 6) {
       setAlerta({
         msg: "La contraseña debe tener al menos 6 caracteres",
         error: true,
@@ -56,29 +58,59 @@ const CambiarPassword = () => {
               <label htmlFor="" className="uppercase font-bold text-gray-600">
                 Password Actual
               </label>
-              <input
-                type="password"
-                placeholder="Escribe tu password actual.."
-                className="border bg-gray-50 w-full p-2 mt-5 rounded-lg"
-                name="pwd_actual"
-                onChange={(e) => {
-                  setPassword({ ...password, [e.target.name]: e.target.value });
-                }}
-              />
+              <div className="relative mt-5">
+                <input
+                  type={ojo ? "text" : "password"}
+                  placeholder="Escribe tu password actual.."
+                  className="p-2 border bg-gray-50 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 w-full"
+                  name="pwd_actual"
+                  onChange={(e) => {
+                    setPassword({
+                      ...password,
+                      [e.target.name]: e.target.value,
+                    });
+                  }}
+                />
+                <div
+                  className="absolute inset-y-0 right-0 flex items-center pr-3 lg:pr-5 cursor-pointer"
+                  onClick={() => setOjo(!ojo)}
+                >
+                  {ojo ? (
+                    <i className="bi bi-eye-slash"></i>
+                  ) : (
+                    <i className="bi bi-eye"></i>
+                  )}
+                </div>
+              </div>
             </div>
             <div className="my-3">
               <label htmlFor="" className="uppercase font-bold text-gray-600">
                 Password Nuevo
               </label>
-              <input
-                type="password"
-                placeholder="Escribe tu password nuevo.."
-                className="border bg-gray-50 w-full p-2 mt-5 rounded-lg"
-                name="pwd_nuevo"
-                onChange={(e) => {
-                  setPassword({ ...password, [e.target.name]: e.target.value });
-                }}
-              />
+              <div className="relative mt-5">
+                <input
+                  type={ojo1 ? "text" : "password"}
+                  placeholder="Escribe tu password nuevo.."
+                  className="p-2 border bg-gray-50 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 w-full"
+                  name="pwd_nuevo"
+                  onChange={(e) => {
+                    setPassword({
+                      ...password,
+                      [e.target.name]: e.target.value,
+                    });
+                  }}
+                />
+                <div
+                  className="absolute inset-y-0 right-0 flex items-center pr-3 lg:pr-5 cursor-pointer"
+                  onClick={() => setOjo1(!ojo1)}
+                >
+                  {ojo1 ? (
+                    <i className="bi bi-eye-slash"></i>
+                  ) : (
+                    <i className="bi bi-eye"></i>
+                  )}
+                </div>
+              </div>
             </div>
             <input
               type="submit"

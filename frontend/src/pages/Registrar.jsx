@@ -9,6 +9,7 @@ const Registrar = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [alerta, setAlerta] = useState({});
+  const [ojo, setOjo] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -107,14 +108,26 @@ const Registrar = () => {
             >
               Password
             </label>
-            <input
-              type="password"
-              placeholder="Password"
-              required
-              className="border w-full p-3 mt-3 bg-gray-50 rounded-xl"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
+            <div className="relative mt-3">
+              <input
+                type={ojo ? "text" : "password"}
+                placeholder="Password"
+                required
+                className="p-3 border bg-gray-50 rounded-xl focus:outline-none focus:ring-blue-500 focus:border-blue-500 w-full"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <div
+                className="absolute inset-y-0 right-0 flex items-center pr-6pr-3 lg:pr-5 cursor-pointer"
+                onClick={() => setOjo(!ojo)}
+              >
+                {ojo ? (
+                  <i className="bi bi-eye-slash"></i>
+                ) : (
+                  <i className="bi bi-eye"></i>
+                )}
+              </div>
+            </div>
           </div>
           {/* Repite Password */}
           <div className="my-5">
