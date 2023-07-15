@@ -118,7 +118,7 @@ const Registrar = () => {
                 onChange={(e) => setPassword(e.target.value)}
               />
               <div
-                className="absolute inset-y-0 right-0 flex items-center pr-6pr-3 lg:pr-5 cursor-pointer"
+                className="absolute inset-y-0 right-0 flex items-center pr-3 lg:pr-5 cursor-pointer"
                 onClick={() => setOjo(!ojo)}
               >
                 {ojo ? (

@@ -8,7 +8,7 @@ const ListadoPacientes = () => {
     <>
       {pacientes.length ? (
         <>
-          <h2 className="font-black text-3xl text-center mt-2">
+          <h2 className="font-black text-3xl text-center mt-5">
             Listado Pacientes
           </h2>
           <p className="text-xl mt-5 mb-10 text-center">
@@ -21,7 +21,9 @@ const ListadoPacientes = () => {
         </>
       ) : (
         <>
-          <h2 className="font-black text-3xl text-center">No hay pacientes</h2>
+          <h2 className="font-black text-3xl text-center mt-5">
+            No hay pacientes
+          </h2>
           <p className="text-xl mt-5 mb-10 text-center">
             Comienza agregando Pacientes
             <span className="text-indigo-600 font-bold">
